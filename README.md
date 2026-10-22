@@ -82,7 +82,6 @@ xiaomi15-teardown/
 ├── LICENSE                    非商业源码许可（禁止商用）
 ├── THIRD_PARTY_NOTICES.md     第三方素材与依赖声明
 ├── PUBLISHING.md              GitHub 发布 / Pages / Release 步骤
-├── .github/workflows/pages.yml GitHub Pages 自动部署
 ├── skill/code-only-3d-teardown/  可复用 skill：纯代码 3D 产品拆解
 ├── dist/Xiaomi15-3D-Teardown.html  单文件版本（可直接分享）
 └── qa/                        无头浏览器截图与交互回归脚本

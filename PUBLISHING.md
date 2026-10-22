@@ -32,12 +32,12 @@ fine-grained token with `Contents: Read and write`. Do not commit a token.
 After the first push:
 
 1. Repository → Settings → Pages.
-2. Build and deployment → Source: **GitHub Actions**.
-3. Run the `Deploy demo to GitHub Pages` workflow (or push to `main`).
+2. Build and deployment → Source: **Deploy from a branch**.
+3. Branch: **main**, folder: **/(root)**.
 4. The site will be available under `https://<your-user>.github.io/xiaomi15-3d-teardown/`.
 
-The workflow deploys the root `index.html`, local `css/js/vendor/assets`, and
-the single-file HTML. No build is required on the runner.
+GitHub Pages serves the root `index.html` and the local `css/js/vendor/assets`
+directories directly. No build step is needed on the server.
 
 ## 4. Create a release
 
