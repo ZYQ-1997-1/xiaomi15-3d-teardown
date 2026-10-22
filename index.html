@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#04070d" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Xiaomi 15 3D 拆解实验室：纯 Three.js 程序化建模，点击部件触发拆解动画，查看核心参数与结构说明。" />
+  <title>Xiaomi 15 · 3D 拆解实验室</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main id="app">
+    <canvas id="scene" aria-label="Xiaomi 15 三维拆解模型"></canvas>
+    <div class="ambient" aria-hidden="true"></div>
+    <div class="vignette" aria-hidden="true"></div>
+    <svg class="leader-lines" id="leaderLines" aria-hidden="true"></svg>
+    <div class="label-layer" id="labelLayer" aria-hidden="true"></div>
+    <div class="tooltip" id="tooltip" role="status"></div>
+
+    <!-- ================= top bar ================= -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand__mark">15</div>
+        <div class="brand__copy">
+          <h1>XIAOMI <span>15</span></h1>
+          <p>TEARDOWN LAB <i></i> 3D 结构拆解</p>
+        </div>
+      </div>
+
+      <div class="topbar__meta">
+        <span class="live"><i></i>REAL-TIME 3D</span>
+        <span class="chip">15 COMPONENTS</span>
+        <span class="chip chip--ghost">SNAPDRAGON 8 ELITE</span>
+      </div>
+
+      <div class="topbar__actions">
+        <button class="btn btn--primary" id="btnExplode" title="逐层拆解全部部件">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 12 10 5 10-5"/><path d="m2 17 10 5 10-5"/></svg>
+          <span>全部拆解</span>
+        </button>
+        <button class="btn" id="btnRestore" title="复原整机">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+          <span>复原</span>
+        </button>
+        <span class="topbar__divider"></span>
+        <button class="btn btn--icon" id="btnRotate" title="自动旋转（空格）" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg>
+        </button>
+        <button class="btn btn--icon" id="btnReset" title="重置视角">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+        <button class="btn btn--icon" id="btnSpec" title="官方完整参数">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        </button>
+        <button class="btn btn--icon" id="btnHelp" title="操作帮助（H）">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 1 1 5.1 2.1c-.8.8-2.2 1.2-2.2 2.9"/><path d="M12 17h.01"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- ================= component list ================= -->
+    <aside class="panel parts-panel" id="partsPanel" aria-label="部件清单">
+      <div class="panel__head">
+        <div>
+          <span class="eyebrow">COMPONENTS</span>
+          <h2>部件清单</h2>
+        </div>
+        <span class="count-pill" id="partCount">14</span>
+      </div>
+      <div class="parts-list" id="partList"></div>
+      <div class="panel__foot">
+        <div class="progress">
+          <div class="progress__meta"><span>拆解进度</span><b id="progressText">0 / 13</b></div>
+          <div class="progress__track"><i id="progressBar"></i></div>
+        </div>
+        <p class="footnote"><span class="pulse-dot"></span>点击部件或列表，触发拆解动画</p>
+      </div>
+    </aside>
+
+    <!-- ================= inspector ================= -->
+    <aside class="panel detail-panel" id="detailPanel" aria-label="部件详情">
+      <div class="panel__head">
+        <div>
+          <span class="eyebrow">INSPECTOR</span>
+          <h2>部件详情</h2>
+        </div>
+        <button class="panel__close" id="detailClose" title="关闭详情面板" aria-label="关闭详情面板">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="detail-scroll" id="detailBody"></div>
+      <div class="panel__foot detail-panel__foot">
+        <span class="status-chip"><i></i><span id="detailHint">INSPECTOR ONLINE</span></span>
+        <span class="mono" id="drawInfo">0 DRAWS</span>
+      </div>
+    </aside>
+
+    <!-- ================= bottom HUD ================= -->
+    <div class="hud-bottom">
+      <div class="statusbar">
+        <span class="statusbar__dot"></span>
+        <span>WEBGL</span>
+        <b id="fps">60</b><span class="muted">FPS</span>
+        <span class="sep">/</span>
+        <span id="calls">0</span><span class="muted">DRAWS</span>
+      </div>
+
+      <div class="hints">
+        <span class="hint"><i class="hint__icon hint__icon--drag"></i>拖拽旋转</span>
+        <span class="hint hint--wheel"><i class="hint__icon hint__icon--wheel"></i>滚轮缩放</span>
+        <span class="hint hint--touch"><i class="hint__icon hint__icon--wheel"></i>双指缩放</span>
+        <span class="hint"><i class="hint__icon hint__icon--click"></i>点击部件拆解</span>
+        <span class="hint hint--desktop"><i class="hint__icon hint__icon--reset"></i>双击空白复原</span>
+      </div>
+
+      <div class="credit">
+        <span class="credit__line"></span>
+        非官方拆解示意 · 纯程序化几何
+      </div>
+    </div>
+
+    <!-- ================= help modal ================= -->
+    <div class="help" id="helpModal" hidden>
+      <div class="help__backdrop" data-close-help></div>
+      <section class="help__card" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+        <div class="help__head">
+          <div>
+            <span class="eyebrow">QUICK GUIDE</span>
+            <h2 id="helpTitle">拆解操作指南</h2>
+          </div>
+          <button class="panel__close" id="helpClose" aria-label="关闭帮助">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div class="help__grid">
+          <div class="help__step">
+            <span class="help__num">01</span>
+            <h3>自由观察</h3>
+            <p>左键拖拽旋转机身，滚轮缩放，右键 / Shift + 拖拽平移视角。触屏支持单指旋转、双指缩放。</p>
+          </div>
+          <div class="help__step">
+            <span class="help__num">02</span>
+            <h3>点击拆解</h3>
+            <p>点击机身上的任意部件，它会沿真实装配方向分离，并伴随青色发光高亮与浮动标注。</p>
+          </div>
+          <div class="help__step">
+            <span class="help__num">03</span>
+            <h3>读取参数</h3>
+            <p>右侧 Inspector 会展示该部件的关键规格、结构说明与拆解难度；左侧清单可快速切换。</p>
+          </div>
+          <div class="help__step">
+            <span class="help__num">04</span>
+            <h3>一键复原</h3>
+            <p>顶部「复原」装回全部部件；双击模型外的空白区域也可收起当前拆解状态。</p>
+          </div>
+        </div>
+
+        <div class="help__shortcuts">
+          <span><kbd>E</kbd>全部拆解</span>
+          <span><kbd>R</kbd>复原整机</span>
+          <span><kbd>Space</kbd>自动旋转</span>
+          <span><kbd>H</kbd>帮助</span>
+          <span><kbd>Esc</kbd>取消选择</span>
+        </div>
+
+        <p class="help__note">
+          本页面仅使用 Three.js + 原生 HTML / CSS / JavaScript。全部几何体、材质与屏幕画面均由代码实时生成，
+          不加载任何外部 3D 模型或贴图文件。结构比例为艺术化重建，非官方工程数据。
+        </p>
+      </section>
+    </div>
+
+    <div class="toast" id="toast" role="status"></div>
+
+    <!-- ================= official specs modal ================= -->
+    <div class="help spec-modal" id="specModal" hidden>
+      <div class="help__backdrop" data-close-spec></div>
+      <section class="help__card spec-sheet-card" role="dialog" aria-modal="true" aria-labelledby="specTitle">
+        <div class="help__head">
+          <div>
+            <span class="eyebrow">OFFICIAL SPECIFICATIONS</span>
+            <h2 id="specTitle">Xiaomi 15 官方参数</h2>
+          </div>
+          <button class="panel__close" id="specClose" aria-label="关闭参数">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <p class="spec-source">数据来源：<a href="https://www.mi.com/prod/xiaomi-15/specs" target="_blank" rel="noopener noreferrer">小米官网 Xiaomi 15 参数页 ↗</a></p>
+        <div class="spec-sheet" id="specSheet"></div>
+      </section>
+    </div>
+
+    <button class="mobile-list-btn" id="btnList" aria-label="打开部件清单">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+      <span>部件清单</span>
+    </button>
+
+    <!-- ================= loading ================= -->
+    <div class="loading" id="loading">
+      <div class="loading__grid"></div>
+      <div class="loading__inner">
+        <div class="loading__ring">
+          <svg viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="29" stroke="rgba(90,210,255,.14)" stroke-width="1.5"/>
+            <circle class="loading__arc" cx="32" cy="32" r="29" stroke="#45d8ff" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <span>15</span>
+        </div>
+        <div class="loading__brand">XIAOMI 15</div>
+        <div class="loading__label">正在构建 3D 结构</div>
+        <div class="loading__track"><i></i></div>
+        <div class="loading__tip" id="loadingTip">初始化 WebGL 渲染器</div>
+      </div>
+    </div>
+  </main>
+
+  <script src="vendor/three.js"></script>
+  <script src="js/screen-image.js"></script>
+  <script src="js/logo-image.js"></script>
+  <script src="js/chip-image.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/model.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

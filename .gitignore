@@ -1,0 +1,12 @@
+node_modules/
+qa/shots/
+qa/*.log
+qa/final-results.json
+*.log
+.DS_Store
+Thumbs.db
+dist/*.zip
+dist/*.bundle
+.vscode/
+.idea/
+.env
