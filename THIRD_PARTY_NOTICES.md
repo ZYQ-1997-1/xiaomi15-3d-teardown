@@ -1,16 +1,17 @@
 # Third-party notices / 第三方素材声明
 
-本仓库的 **代码**（HTML/CSS/JavaScript、构建脚本、QA 脚本、Three.js 转换脚本和文档）以 MIT License 发布，见 `LICENSE`。
+本仓库的 **代码、文档与配套 skill**（HTML/CSS/JavaScript、构建脚本、QA 脚本、Three.js 转换脚本和文档）以 **Non-Commercial Source License 1.0** 发布，**严禁商用**，见 `LICENSE`。这不是 OSI 定义的开源许可证。
 
 ## 1. Three.js
 
 - `vendor/three.js` 为 Three.js r170 的经典脚本构建。
 - Three.js 由 three.js authors 开发，MIT License。
 - 上游：https://github.com/mrdoob/three.js
+- Three.js 本身仍按 MIT 授权，不受本项目的非商业限制影响。
 
-## 2. 演示用品牌与产品素材（不由 MIT 覆盖）
+## 2. 演示用品牌与产品素材（不由本项目许可覆盖）
 
-以下文件/内嵌副本是为了复现本演示而加入的第三方视觉素材，**不属于 MIT 授权范围**；相关商标、角色、壁纸和产品图的权利归各自所有者：
+以下文件/内嵌副本是为了复现本演示而加入的第三方视觉素材，**不属于本项目许可范围**；相关商标、角色、壁纸和产品图的权利归各自所有者：
 
 - `assets/screen-lock.jpg` / `js/screen-image.js`
   - 用户提供的 Xiaomi 15 前面板/锁屏演示图。
@@ -23,7 +24,7 @@
 
 Xiaomi、Xiaomi 15、Leica、VARIO-SUMMILUX、Snapdragon、Qualcomm 等名称和标识是其各自所有者的商标。本项目与小米、徕卡、高通没有关联，也未获其背书。
 
-**若要再分发或商用**，请先确认你拥有这些图片的使用权。没有授权时，请删除上述图片与对应的 `js/*-image.js` 文件；页面会回退到程序化生成的占位屏幕/字标/芯片贴图（代码仍可运行）。更彻底的做法是把素材替换为自制的无商标图片。
+**若要再分发或商用**，请注意：项目代码本身已禁止商用；图片还需要单独确认权利。没有授权时，请删除上述图片与对应的 `js/*-image.js` 文件；页面会回退到程序化生成的占位屏幕/字标/芯片贴图（代码仍可运行）。更彻底的做法是把素材替换为自制的无商标图片。
 
 ## 3. 参数与参考资料
 

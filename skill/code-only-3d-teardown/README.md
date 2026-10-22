@@ -2,6 +2,15 @@
 
 把一个真实产品做成纯代码、可离线打开的 Three.js 3D 拆解页。
 
+> **License:** this skill package follows the parent project's
+> **Non-Commercial Source License 1.0**. It may not be used commercially.
+> See the repository `LICENSE` and `THIRD_PARTY_NOTICES.md`.
+>
+> **AI disclosure:** the parent project was not built from scratch by hand;
+> it was created with the owner directing an AI agent (DeepSeek Harness).
+> This skill is an extraction of that process and must keep the same
+> non-commercial / AI-assistance notices.
+
 ## Install
 
 Copy this folder into a DSH skill directory:

@@ -1,10 +1,10 @@
 {
   "name": "xiaomi15-3d-teardown",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A code-only, offline Three.js Xiaomi 15 interactive 3D teardown.",
   "type": "module",
   "private": false,
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "author": "Xiaomi 15 3D Teardown contributors",
   "engines": {
     "node": ">=18"

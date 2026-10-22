@@ -1,7 +1,8 @@
 # Publishing to GitHub
 
-This repo is prepared as an open-source project, but publishing requires a
-GitHub account and a local Git credential. The code itself has no CI secrets.
+This repo is prepared as a **source-available, non-commercial** project.
+Publishing requires a GitHub account and a local Git credential. The code
+itself has no CI secrets. Commercial use is prohibited; see `LICENSE`.
 
 ## 1. Create the empty repository
 
@@ -49,11 +50,12 @@ npm run build
 Then attach:
 
 - `dist/Xiaomi15-3D-Teardown.html`
-- `dist/Xiaomi15-3D-Teardown-v1.0.0.zip` (if generated)
-- optional: `dist/code-only-3d-teardown.skill.zip`
+- `dist/Xiaomi15-3D-Teardown-v1.0.1.zip`
+- `dist/code-only-3d-teardown.skill.zip`
 
-Use tag `v1.0.0` and a short description. The tag is already created locally
-by the initial packaging step.
+Use tag `v1.0.1` and a short description. The tag is created locally by the
+initial packaging step. The previous v1.0.0 release/assets are removed when
+the non-commercial license correction is published.
 
 ## 5. Asset licensing gate
 
@@ -64,7 +66,7 @@ Before making the repository public, confirm you have permission to redistribute
 - `assets/chip-snapdragon.png` / `js/chip-image.js`
 - `preview*.png`
 
-These are marked as demo assets in `THIRD_PARTY_NOTICES.md` and are not MIT.
-If you do not have permission, replace them with self-made neutral assets or
-remove them and keep the procedural fallback. The code remains functional
-without the supplied images.
+These are marked as demo assets in `THIRD_PARTY_NOTICES.md` and are not covered
+by the project's Non-Commercial Source License. If you do not have permission,
+replace them with self-made neutral assets or remove them and keep the
+procedural fallback. The code remains functional without the supplied images.

@@ -1,10 +1,18 @@
 # Xiaomi 15 · 3D 拆解实验室
 
-[GitHub 仓库](https://github.com/ZYQ-1997-1/xiaomi15-3d-teardown) · [在线演示](https://zyq-1997-1.github.io/xiaomi15-3d-teardown/) · [Release v1.0.0](https://github.com/ZYQ-1997-1/xiaomi15-3d-teardown/releases/tag/v1.0.0)
+[GitHub 仓库](https://github.com/ZYQ-1997-1/xiaomi15-3d-teardown) · [在线演示](https://zyq-1997-1.github.io/xiaomi15-3d-teardown/) · [Release v1.0.1](https://github.com/ZYQ-1997-1/xiaomi15-3d-teardown/releases/tag/v1.0.1)
 
-一个完全由代码生成的 Xiaomi 15 交互式 3D 拆解可视化页面。仅使用 **Three.js + 原生 HTML / CSS / JavaScript**，不加载任何外部 3D 模型；机身、摄像头、按键、接口、扬声器与电池标签全部在运行时程序化构建，锁屏壁纸使用用户提供的图片并以 data URL 内嵌。
+> **建设声明（必读）**
+>
+> 本项目**并非本人从零开始独立完成**，而是在本人提出需求、提供参考图/素材并持续反馈的前提下，借助 AI 智能体 **DeepSeek Harness** 协助建立。本人对最终发布内容负责。
+>
+> **严禁用于任何商业用途。** 项目仅供个人学习、研究与非商业演示；未经版权所有者书面许可，不得用于付费产品、客户交付、广告、商业展示、商业培训、企业内部商业项目或任何以盈利为目的的场景。
+>
+> 代码采用[非商业源码许可](LICENSE)（**不是 OSI 定义的开源许可**）。转载、修改或再分发必须保留本声明、`LICENSE` 和第三方素材声明，且不得移除“AI 辅助 / 严禁商用”标识。
 
-**代码 MIT 开源；演示图片中的品牌/产品素材不纳入 MIT，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。**
+一个在 AI 智能体辅助下完成的 Xiaomi 15 交互式 3D 拆解可视化页面。仅使用 **Three.js + 原生 HTML / CSS / JavaScript**，不加载任何外部 3D 模型；机身、摄像头、按键、接口、扬声器与电池标签全部在运行时程序化构建，锁屏壁纸使用用户提供的图片并以 data URL 内嵌。
+
+**代码为非商业源码许可；演示图片中的品牌/产品素材不纳入该许可，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。**
 
 ![拆解视图](preview.png)
 
@@ -71,7 +79,7 @@ xiaomi15-teardown/
 ├── build-single.mjs           生成单文件分发版
 ├── package.json               构建 / QA 脚本（运行时零依赖）
 ├── tools/embed-assets.mjs     从 assets/ 重新生成 base64 图片模块
-├── LICENSE                    MIT（代码）
+├── LICENSE                    非商业源码许可（禁止商用）
 ├── THIRD_PARTY_NOTICES.md     第三方素材与依赖声明
 ├── PUBLISHING.md              GitHub 发布 / Pages / Release 步骤
 ├── .github/workflows/pages.yml GitHub Pages 自动部署
@@ -113,12 +121,21 @@ cp -r skill/code-only-3d-teardown .dsh/skills/
 
 本机已验证安装到当前工作区的 `.dsh/skills/code-only-3d-teardown`，DSH 会自动热加载。
 
-## 开源与素材说明
+## AI 辅助声明
 
-- **代码**：MIT，见 [LICENSE](LICENSE)。
-- **Three.js**：MIT，见 `vendor/three.js` 与 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
-- **屏幕图、XIAOMI 字标、Snapdragon 贴纸、预览图**：来自用户提供的演示素材，**不属于 MIT 授权范围**；相关商标/版权归小米、徕卡、高通等各自所有者。公开再分发前请确认授权，或按素材声明删除并替换为自制占位素材。
+- 项目需求、参考图/产品素材、反复的视觉纠正和最终发布由仓库所有者提供与决定。
+- 代码、Three.js 建模、Canvas 贴图、界面、文案初稿、调试和打包由 AI 智能体 **DeepSeek Harness** 在本人持续指令与反馈下协助生成。
+- 因此，**本项目不应被描述为“本人从零开始独立手写完成”**；准确描述是“本人主导、AI 智能体协助建立”。
+- 页面为艺术化结构重建，不代官方工程数据；AI 生成内容可能存在错误，请自行核验。
+
+## 许可、素材与商用限制
+
+- **项目代码、文档与配套 skill**：采用 [Non-Commercial Source License 1.0](LICENSE)，仅允许非商业使用；**严禁商用**。这不是 OSI 定义的开源许可证，准确说法是“源码公开 / source-available”。
+- **Three.js**：仍为 MIT，见 `vendor/three.js` 与 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)；Three.js 本身的 MIT 授权不受本项目许可影响。
+- **屏幕图、XIAOMI 字标、Snapdragon 贴纸、预览图**：来自用户提供的演示素材，**不属于本项目许可范围**；相关商标/版权归小米、徕卡、高通等各自所有者。公开再分发前请确认授权，或按素材声明删除并替换为自制占位素材。
 - 本项目与小米、徕卡、高通无关联，也未获其背书。
+
+> 如需商用，必须另行取得版权所有者的书面许可；默认不授予任何商业权利。
 
 ## 本地开发与校验
 
