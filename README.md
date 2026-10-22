@@ -1,5 +1,7 @@
 # Xiaomi 15 · 3D 拆解实验室
 
+[GitHub 仓库](https://github.com/ZYQ-1997-1/xiaomi15-3d-teardown) · [在线演示](https://zyq-1997-1.github.io/xiaomi15-3d-teardown/) · [Release v1.0.0](https://github.com/ZYQ-1997-1/xiaomi15-3d-teardown/releases/tag/v1.0.0)
+
 一个完全由代码生成的 Xiaomi 15 交互式 3D 拆解可视化页面。仅使用 **Three.js + 原生 HTML / CSS / JavaScript**，不加载任何外部 3D 模型；机身、摄像头、按键、接口、扬声器与电池标签全部在运行时程序化构建，锁屏壁纸使用用户提供的图片并以 data URL 内嵌。
 
 **代码 MIT 开源；演示图片中的品牌/产品素材不纳入 MIT，详见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。**
@@ -20,7 +22,9 @@
 
 ## 打开方式
 
-直接双击 `index.html` 即可（无需服务器、无需联网）。Three.js r170 已转换为经典脚本并放在 `vendor/three.js`，因此 `file://` 协议下也能正常工作。
+在线演示：https://zyq-1997-1.github.io/xiaomi15-3d-teardown/
+
+本地直接双击 `index.html` 即可（无需服务器、无需联网）。Three.js r170 已转换为经典脚本并放在 `vendor/three.js`，因此 `file://` 协议下也能正常工作。
 
 单文件分发版：`dist/Xiaomi15-3D-Teardown.html`，同样可以双击打开，零外部请求。
 
